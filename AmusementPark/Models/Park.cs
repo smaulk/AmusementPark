@@ -1,4 +1,5 @@
-﻿using AmusementPark.models.attractions;
+﻿using System.Collections.Generic;
+using AmusementPark.models.attractions;
 
 namespace AmusementPark.models;
 

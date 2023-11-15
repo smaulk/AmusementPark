@@ -1,4 +1,6 @@
-﻿namespace AmusementPark.models;
+﻿using System.Collections.Generic;
+
+namespace AmusementPark.models;
 
 public class Visitor
 {

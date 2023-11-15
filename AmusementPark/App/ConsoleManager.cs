@@ -1,4 +1,6 @@
-﻿namespace AmusementPark;
+﻿using System;
+
+namespace AmusementPark;
 
 public class ConsoleManager
 {
