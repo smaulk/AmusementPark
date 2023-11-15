@@ -36,7 +36,7 @@ public class Park
     
     //Получение последнего id
     private static int lastId = 0;
-    public static int GetLastId() => ++lastId;
+    public static int LastId => ++lastId;
     
     public Park(string parkName, string parkAddress, string parkWorkingHours)
     {

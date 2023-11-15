@@ -13,7 +13,7 @@ public abstract class AttractionModel
     public AttractionModel(string name,  double price,
         int ageRestriction, int maxVisitors, double durationAttractionInMin)
     {
-        this.Id = Park.GetLastId();
+        this.Id = Park.LastId;
         this.Name = name;
         this.Price = price;
         this.AgeRestriction = ageRestriction;
