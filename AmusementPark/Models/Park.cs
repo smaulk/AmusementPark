@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using AmusementPark.models.attractions;
 
 namespace AmusementPark.models;
@@ -7,7 +8,30 @@ public class Park
 {
     public string ParkName {get; set;}
     public string ParkAddress {get; set;}
-    public string ParkWorkingHours {get; set;}
+
+    private string parkWorkingHours = "не задано";
+    public string ParkWorkingHours
+    {
+        get => parkWorkingHours;
+        set
+        {
+            //Проверка, что заданная строка в формате HH:mm - HH:mm
+            DateTime startTime;
+            DateTime endTime;
+            string[] formats = { "HH:mm", "H:mm" }; // Форматы, которые ожидаются
+            string[] timeRange = value.Split('-');
+            if (timeRange.Length == 2 &&
+                DateTime.TryParseExact(timeRange[0].Trim(), formats, CultureInfo.InvariantCulture, DateTimeStyles.None,
+                    out startTime) &&
+                DateTime.TryParseExact(timeRange[1].Trim(), formats, CultureInfo.InvariantCulture, DateTimeStyles.None,
+                    out endTime))
+            {
+                // Если обе строки успешно преобразованы в формат времени
+                // Можно установить новые рабочие часы
+                parkWorkingHours = value;
+            }
+        }
+    }
     private AttractionCollection<AttractionModel> AttractionsList { get;}
     
     //Получение последнего id
@@ -20,6 +44,11 @@ public class Park
         this.ParkAddress = parkAddress;
         this.ParkWorkingHours = parkWorkingHours;
         this.AttractionsList = new AttractionCollection<AttractionModel>();
+    }
+
+    public override string ToString()
+    {
+        return $"Название: {ParkName}\nАдрес: {ParkAddress}\nВремя работы: {ParkWorkingHours}";
     }
 
     public void AddAttraction(AttractionModel attraction)

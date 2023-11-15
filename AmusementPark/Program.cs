@@ -1,18 +1,15 @@
-﻿using AmusementPark;
+﻿using System;
+using AmusementPark;
 using AmusementPark.models;
 using AmusementPark.models.attractions;
 
 class Program
 {
-    private static string[] mainMenuItems = new[]
-    {
-        "Закрыть программу", "Информация о парке", "Просмотр аттракционов"
-    };
-    
-    
+
+
     public static void Main()
     {
-        Park park = new Park("Парк дружбы", "г. Челябиск, ул. Ленина 120", "8-20");
+        Park park = new Park("Парк дружбы", "г. Челябинск, ул. Ленина 120", "08:00 - 20:00");
 
         var attractions = new AttractionModel[]
         {
@@ -30,9 +27,8 @@ class Program
             new ShootingRange("Ковбой", 280, 10, 8, 10, 6, "револьвер")
         };
         park.AddAttraction(attractions);
-
-        var consoleManager = new ConsoleManager();
-        consoleManager.RenderMenu(mainMenuItems);
-    
+        
+        ParkApp app = new ParkApp(park);
+        app.Run();
     }
 }

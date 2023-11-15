@@ -17,7 +17,7 @@ public class RollerCoaster: AttractionModel
     
     public override string GetInfo()
     {
-        return $"Аттракцион: Лабиринт страха\n" +
+        return $"Аттракцион: Американские горки\n" +
                $"Название: {Name}, Длина трека: {TrackLengthInMeters} м., Макс. скорость: {MaxSpeedInKmH} км/ч, " +
                $" Вместимость вагона: {WagonCapacity} чел., Стоимость: {Price} руб., Возрастное ограничение: {AgeRestriction}+";
     }

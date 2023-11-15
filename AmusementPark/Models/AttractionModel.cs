@@ -22,5 +22,10 @@ public abstract class AttractionModel
     }
 
     public abstract string GetInfo();
+
+    public override string ToString()
+    {
+        return $"{this.GetType().Name}, Название: {Name}, Цена: {Price}";
+    }
     
 }
