@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Globalization;
+using AmusementPark.models;
 
 namespace AmusementPark;
 
@@ -60,9 +62,49 @@ public class ConsoleManager
         while (true)
         {
             double num;
-            if (double.TryParse(Console.ReadLine(), out num))
+            if (double.TryParse(Console.ReadLine(), NumberStyles.Any, CultureInfo.InvariantCulture, out num))
                 return num;
             Console.WriteLine("Введите число!");
         }
+    }
+
+    public bool GetBool(string message)
+    {
+        Console.WriteLine(message);
+        Console.WriteLine("(Введите 0 если нет, и 1 если да)");
+
+        while (true)
+        {
+            var str = Console.ReadLine();
+            if (str == "0" || str == "1")
+                return str != "0";
+            Console.WriteLine("Введите 0 если нет, и 1 если да:");
+        }
+    }
+    
+    public AttractionType GetAttractonType(string message)
+    {
+        Console.WriteLine(message);
+        var types = new string[]
+        {
+            "Для детей", "Экстремальный", "Спортивный", "Развлекательный", "Неизвестный"
+        };
+        var typeID = MenuDisplay(types);
+        
+        switch (typeID)
+        {
+            case 1:
+                return AttractionType.ForChildren;
+            case 2:
+                return AttractionType.Extreme;
+            case 3:
+                return AttractionType.Sports;
+            case 4:
+                return AttractionType.Entertainment;
+            case 5:
+                return AttractionType.Unidentified;
+        }
+
+        return AttractionType.Unidentified;
     }
 }

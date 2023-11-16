@@ -16,7 +16,8 @@ public class Carousel : AttractionModel
     {
         var carouselType = GroundCarousel ? "Наземная" : "Воздушная";
         return $"Аттракцион: Карусель\n" +
-               $"Название: {Name}, Тип карусели: {carouselType}, Вид сидения: {SeatType}, " +
-               $"Стоимость: {Price} руб., Возрастное ограничение: {AgeRestriction}+";
+               $"Название: {Name}\nТип карусели: {carouselType}\nВид сидения: {SeatType}\n" +
+               $"Стоимость: {Price} руб.\nВозрастное ограничение: {AgeRestriction}+" +
+               $"\nМаксимальное число посетителей: {MaxVisitors}\nДлительность в минутах: {DurationAttractionInMin}";
     }
 }

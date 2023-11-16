@@ -18,7 +18,8 @@ public class RollerCoaster: AttractionModel
     public override string GetInfo()
     {
         return $"Аттракцион: Американские горки\n" +
-               $"Название: {Name}, Длина трека: {TrackLengthInMeters} м., Макс. скорость: {MaxSpeedInKmH} км/ч, " +
-               $" Вместимость вагона: {WagonCapacity} чел., Стоимость: {Price} руб., Возрастное ограничение: {AgeRestriction}+";
+               $"Название: {Name}\nДлина трека: {TrackLengthInMeters} м.\nМакс. скорость: {MaxSpeedInKmH} км/ч\n" +
+               $"Вместимость вагона: {WagonCapacity} чел.\nСтоимость: {Price} руб.\nВозрастное ограничение: {AgeRestriction}+" +
+               $"\nМаксимальное число посетителей: {MaxVisitors}\nДлительность в минутах: {DurationAttractionInMin}";
     }
 }

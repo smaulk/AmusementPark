@@ -16,7 +16,8 @@ public class FerrisWheel: AttractionModel
     public override string GetInfo()
     {
         return $"Аттракцион: Колесо обозрения\n" +
-               $"Название: {Name}, Вместимость кабины: {CabinCapacity} чел., Высота: {HeightInMeters}м., " +
-               $"Стоимость: {Price} руб., Возрастное ограничение: {AgeRestriction}+";
+               $"Название: {Name}\nВместимость кабины: {CabinCapacity} чел.\nВысота: {HeightInMeters}м.\n" +
+               $"Стоимость: {Price} руб.\nВозрастное ограничение: {AgeRestriction}+" +
+               $"\nМаксимальное число посетителей: {MaxVisitors}\nДлительность в минутах: {DurationAttractionInMin}";
     }
 }

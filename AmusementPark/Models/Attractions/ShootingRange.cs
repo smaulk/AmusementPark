@@ -16,7 +16,8 @@ public class ShootingRange : AttractionModel
     public override string GetInfo()
     {
         return $"Аттракцион: Тир\n" +
-               $"Название: {Name}, Тип оружия: {GunType}, Количество целей: {TargetCount}, " +
-               $"Стоимость: {Price} руб., Возрастное ограничение: {AgeRestriction}+";
+               $"Название: {Name}\nТип оружия: {GunType}\nКоличество целей: {TargetCount}\n" +
+               $"Стоимость: {Price} руб.\nВозрастное ограничение: {AgeRestriction}+" +
+               $"\nМаксимальное число посетителей: {MaxVisitors}\nДлительность в минутах: {DurationAttractionInMin}";
     }
 }

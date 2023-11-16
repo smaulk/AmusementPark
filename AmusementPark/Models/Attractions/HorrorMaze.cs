@@ -29,7 +29,8 @@ public class HorrorMaze : AttractionModel
     public override string GetInfo()
     {
         return $"Аттракцион: Лабиринт страха\n" +
-               $"Название: {Name}, Тема лабиринта: {Theme}, Уровень страха (1-10): {ScareLevel}, " +
-               $"Стоимость: {Price} руб., Возрастное ограничение: {AgeRestriction}+";
+               $"Название: {Name}\nТема лабиринта: {Theme}\nУровень страха (1-10): {ScareLevel}\n" +
+               $"Стоимость: {Price} руб.\nВозрастное ограничение: {AgeRestriction}+" +
+               $"\nМаксимальное число посетителей: {MaxVisitors}\nДлительность в минутах: {DurationAttractionInMin}";
     }
 }

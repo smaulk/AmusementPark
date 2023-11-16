@@ -16,7 +16,8 @@ public class MiniGolf : AttractionModel
     public override string GetInfo()
     {
         return $"Аттракцион: Мини-гольф\n" +
-               $"Название: {Name}, Тип поверхности: {SurfaceType}, Количество лунок: {NumberOfHoles}, " +
-               $"Стоимость: {Price} руб., Возрастное ограничение: {AgeRestriction}+";
+               $"Название: {Name}\nТип поверхности: {SurfaceType}\nКоличество лунок: {NumberOfHoles}\n" +
+               $"Стоимость: {Price} руб.\nВозрастное ограничение: {AgeRestriction}+" +
+               $"\nМаксимальное число посетителей: {MaxVisitors}\nДлительность в минутах: {DurationAttractionInMin}";
     }
 }

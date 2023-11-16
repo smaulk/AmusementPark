@@ -82,7 +82,11 @@ public class Park
     {
         return new List<AttractionModel>(AttractionsList).ToArray();
     }
-    
+
+    public bool ExistAttraction(int id)
+    {
+        return GetAttractionById(id) != null;
+    }
     
     public bool BuyTicket(Visitor visitor, int attractionId)
     {
