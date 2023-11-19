@@ -15,4 +15,10 @@ public class Ticket
         this.TicketType = ticketType;
         this.AttractionId = attractionId;
     }
+
+    public override string ToString()
+    {
+        var type = TicketType == TicketType.Adult ? "Взрослый" : "Детский";
+        return $"Название: {Name}, Цена: {Price}, Тип билета: {type}";
+    }
 }

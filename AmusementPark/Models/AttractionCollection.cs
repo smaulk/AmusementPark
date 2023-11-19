@@ -10,7 +10,6 @@ public class AttractionCollection<T> : IEnumerable<T> where T : AttractionModel
 {
     private List<T> list;   
     
-
     public AttractionCollection()
     {
         list = new List<T>();

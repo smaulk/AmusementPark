@@ -28,6 +28,10 @@ class Program
         };
         park.AddAttraction(attractions);
         
+        park.AddVisitor(new Visitor("Иван", 10));
+        park.AddVisitor(new Visitor("Маша", 14));
+        park.AddVisitor(new Visitor("Дима", 20));
+
         ParkApp app = new ParkApp(park);
         app.Run();
     }

@@ -33,10 +33,9 @@ public class Park
         }
     }
     private AttractionCollection<AttractionModel> AttractionsList { get;}
-    
-    //Получение последнего id
-    private static int lastId = 0;
-    public static int LastId => ++lastId;
+    private List<Visitor> VisitorsList { get; }
+
+    public int CountAttractions => AttractionsList.Count;
     
     public Park(string parkName, string parkAddress, string parkWorkingHours)
     {
@@ -44,11 +43,13 @@ public class Park
         this.ParkAddress = parkAddress;
         this.ParkWorkingHours = parkWorkingHours;
         this.AttractionsList = new AttractionCollection<AttractionModel>();
+        this.VisitorsList = new List<Visitor>();
     }
 
     public override string ToString()
     {
-        return $"Название: {ParkName}\nАдрес: {ParkAddress}\nВремя работы: {ParkWorkingHours}";
+        return $"Название: {ParkName}\nАдрес: {ParkAddress}\nВремя работы: {ParkWorkingHours}\n" +
+               $"Количество аттракционов: {CountAttractions}";
     }
 
     public void AddAttraction(AttractionModel attraction)
@@ -80,18 +81,57 @@ public class Park
     //Чтобы нельзя было добавить/Удалить аттракцион из списка
     public AttractionModel[] GetAllAttractions()
     {
-        return new List<AttractionModel>(AttractionsList).ToArray();
+        return AttractionsList.ToArray();
     }
 
     public bool ExistAttraction(int id)
     {
         return GetAttractionById(id) != null;
     }
+
+    public void AddVisitor(Visitor visitor)
+    {
+        VisitorsList.Add(visitor);
+    }
+    
+    public void AddVisitor(Visitor[] visitors)
+    {
+        foreach (var visitor in visitors)
+            AddVisitor(visitor);
+    }
+    
+    public bool RemoveVisitor(int id)
+    {
+        if (!ExistVisitor(id)) return false;
+        VisitorsList.RemoveAt(id);
+        return true;
+    }
+
+    public bool RemoveVisitor(Visitor visitor)
+    {
+        return VisitorsList.Remove(visitor);
+    }
+    
+    public Visitor? GetVisitorById(int id)
+    {
+        return VisitorsList[id];
+    }
+
+    public bool ExistVisitor(int id)
+    {
+        if (id < 0 || id >= VisitorsList.Count) return false;
+        return true;
+    }
+    
+    public Visitor[] GetAllVisitors()
+    {
+        return VisitorsList.ToArray();
+    }
     
     public bool BuyTicket(Visitor visitor, int attractionId)
     {
         var attraction = GetAttractionById(attractionId);
-        if (attraction == null) return false;
+        if (attraction == null || visitor == null) return false;
         double price = attraction.Price;
         var type = TicketType.Adult;
         if (visitor.Age < 14)
