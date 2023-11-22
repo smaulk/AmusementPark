@@ -40,8 +40,18 @@ public class AttractionCollection<T> : IEnumerable<T> where T : AttractionModel
     public T? Find(Func<T, bool> predicate)
     {
         return list.FirstOrDefault(predicate);
-    } 
-    
+    }
+
+
+    public void Sort(Func<T, T, int> comparison)
+    {
+        list.Sort((x, y) => Compare(x,y, comparison));
+    }
+
+    public int Compare(T item1, T item2, Func<T, T, int> comparison)
+    {
+        return comparison(item1, item2);
+    }
     
     public IEnumerator<T> GetEnumerator()
     {

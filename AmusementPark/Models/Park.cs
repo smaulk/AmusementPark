@@ -142,4 +142,9 @@ public class Park
         visitor.AddTicket(new Ticket($"Билет на аттракцион \"{attraction.Name}\"", price, type, attractionId));
         return true;
     }
+
+    public void SortAttractions(Func<AttractionModel, AttractionModel, int> comparison)
+    {
+        AttractionsList.Sort(comparison);
+    }
 }

@@ -29,7 +29,7 @@ public abstract class AttractionModel
 
     public override string ToString()
     {
-        return $"{this.GetType().Name}, Название: {Name}, Цена: {Price}";
+        return $"{GetType().Name}, Название: {Name}, Цена: {Price}, Вместимость: {MaxVisitors} чел., Возрастное ограничение: {AgeRestriction}+";
     }
     
 }

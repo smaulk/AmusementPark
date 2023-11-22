@@ -16,7 +16,12 @@ public class ParkApp
         this.cm = new ConsoleManager();
     }
     
-
+    private Func<AttractionModel, AttractionModel, int> compareId = (x, y) => x.Id.CompareTo(y.Id);
+    private Func<AttractionModel, AttractionModel, int> compareName = (x, y) => String.Compare(x.Name, y.Name, StringComparison.Ordinal);
+    private Func<AttractionModel, AttractionModel, int> comparePrice = (x, y) => x.Price.CompareTo(y.Price);
+    private Func<AttractionModel, AttractionModel, int> compareMaxVisitors = (x, y) => y.MaxVisitors.CompareTo(x.MaxVisitors);
+    private Func<AttractionModel, AttractionModel, int> compareAgeRestriction = (x, y) => x.AgeRestriction.CompareTo(y.AgeRestriction);
+    
     public void Run()//Запуск и главное меню
     {
         string[] menuItems = new[]
@@ -88,7 +93,7 @@ public class ParkApp
 
         string[] menuItems = new[]
         {
-            "В главное меню", "Добавить аттракцион", "Выбрать аттракцион"
+            "В главное меню", "Добавить аттракцион", "Выбрать аттракцион", "Сортировать"
         };
 
         while (true)
@@ -104,6 +109,9 @@ public class ParkApp
                     break;
                 case 3: //Выбор аттракциона
                     SelectAttractionMenu(GetExistAttractionId(cm.GetInt("Введите id нужного аттракциона:")));
+                    break;
+                case 4:
+                    SelectSortingMenu();
                     break;
             }
         }
@@ -399,5 +407,38 @@ public class ParkApp
                 park.BuyTicket(visitor, attraction.Id);
         }
         cm.Message("Билеты были успешно приобретены!");
+    }
+
+
+    private void SelectSortingMenu()
+    {
+        string[] menuItems = new[]
+        {
+            "Назад","Сортировать по id", "Сортировать по имени", "Сортировать по цене",
+            "Сортировать по вместимости", "Сортировать по возрастному ограничению"
+        };
+        
+        var menuId = cm.MenuDisplay(menuItems);
+        switch (menuId)
+        {
+            case 1:
+                return;
+            case 2:
+                park.SortAttractions(compareId);
+                break;
+            case 3:
+                park.SortAttractions(compareName);
+                break;
+            case 4:
+                park.SortAttractions(comparePrice);
+                break;
+            case 5:
+                park.SortAttractions(compareMaxVisitors);
+                break;
+            case 6:
+                park.SortAttractions(compareAgeRestriction);
+                break;
+        }
+        cm.Message("Аттракционы успешно отсортированы!");
     }
 }
