@@ -11,12 +11,12 @@ public abstract class AttractionModel
     public double DurationAttractionInMin { get; set; }
     
     //Последний Id
-    private static int lastId = 0;
+    private static int _lastId = 0;
 
     public AttractionModel(string name,  double price,
         int ageRestriction, int maxVisitors, double durationAttractionInMin)
     {
-        this.Id = ++lastId;
+        this.Id = ++_lastId;
         this.Name = name;
         this.Price = price;
         this.AgeRestriction = ageRestriction;

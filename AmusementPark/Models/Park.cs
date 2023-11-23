@@ -9,26 +9,24 @@ public class Park
     public string ParkName {get; set;}
     public string ParkAddress {get; set;}
 
-    private string parkWorkingHours = "не задано";
+    private string _parkWorkingHours = "не задано";
     public string ParkWorkingHours
     {
-        get => parkWorkingHours;
+        get => _parkWorkingHours;
         set
         {
             //Проверка, что заданная строка в формате HH:mm - HH:mm
-            DateTime startTime;
-            DateTime endTime;
             string[] formats = { "HH:mm", "H:mm" }; // Форматы, которые ожидаются
             string[] timeRange = value.Split('-');
             if (timeRange.Length == 2 &&
                 DateTime.TryParseExact(timeRange[0].Trim(), formats, CultureInfo.InvariantCulture, DateTimeStyles.None,
-                    out startTime) &&
+                    out var startTime) &&
                 DateTime.TryParseExact(timeRange[1].Trim(), formats, CultureInfo.InvariantCulture, DateTimeStyles.None,
-                    out endTime))
+                    out var endTime))
             {
                 // Если обе строки успешно преобразованы в формат времени
                 // Можно установить новые рабочие часы
-                parkWorkingHours = value;
+                _parkWorkingHours = $"{startTime:HH:mm} - {endTime:HH:mm}";
             }
         }
     }
@@ -114,7 +112,7 @@ public class Park
     
     public Visitor? GetVisitorById(int id)
     {
-        return VisitorsList[id];
+        return ExistAttraction(id) ? VisitorsList[id] : null;
     }
 
     public bool ExistVisitor(int id)
@@ -128,10 +126,10 @@ public class Park
         return VisitorsList.ToArray();
     }
     
-    public bool BuyTicket(Visitor visitor, int attractionId)
+    public bool BuyTicket(Visitor? visitor, AttractionModel? attraction)
     {
-        var attraction = GetAttractionById(attractionId);
-        if (attraction == null || visitor == null) return false;
+        if (attraction == null || visitor == null ||
+            visitor.Age < attraction.AgeRestriction) return false;
         double price = attraction.Price;
         var type = TicketType.Adult;
         if (visitor.Age < 14)
@@ -139,7 +137,7 @@ public class Park
             price /= 2;
             type = TicketType.Child;
         }
-        visitor.AddTicket(new Ticket($"Билет на аттракцион \"{attraction.Name}\"", price, type, attractionId));
+        visitor.AddTicket(new Ticket($"Билет на аттракцион \"{attraction.Name}\"", price, type, attraction.Id));
         return true;
     }
 

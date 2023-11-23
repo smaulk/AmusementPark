@@ -16,11 +16,11 @@ public class ParkApp
         this.cm = new ConsoleManager();
     }
     
-    private Func<AttractionModel, AttractionModel, int> compareId = (x, y) => x.Id.CompareTo(y.Id);
-    private Func<AttractionModel, AttractionModel, int> compareName = (x, y) => String.Compare(x.Name, y.Name, StringComparison.Ordinal);
-    private Func<AttractionModel, AttractionModel, int> comparePrice = (x, y) => x.Price.CompareTo(y.Price);
-    private Func<AttractionModel, AttractionModel, int> compareMaxVisitors = (x, y) => y.MaxVisitors.CompareTo(x.MaxVisitors);
-    private Func<AttractionModel, AttractionModel, int> compareAgeRestriction = (x, y) => x.AgeRestriction.CompareTo(y.AgeRestriction);
+    private readonly Func<AttractionModel, AttractionModel, int> _compareId = (x, y) => x.Id.CompareTo(y.Id);
+    private readonly Func<AttractionModel, AttractionModel, int> _compareName = (x, y) => String.Compare(x.Name, y.Name, StringComparison.Ordinal);
+    private readonly Func<AttractionModel, AttractionModel, int> _comparePrice = (x, y) => x.Price.CompareTo(y.Price);
+    private readonly Func<AttractionModel, AttractionModel, int> _compareMaxVisitors = (x, y) => y.MaxVisitors.CompareTo(x.MaxVisitors);
+    private readonly Func<AttractionModel, AttractionModel, int> _compareAgeRestriction = (x, y) => x.AgeRestriction.CompareTo(y.AgeRestriction);
     
     public void Run()//Запуск и главное меню
     {
@@ -108,7 +108,7 @@ public class ParkApp
                     CreateAttractionMenu();
                     break;
                 case 3: //Выбор аттракциона
-                    SelectAttractionMenu(GetExistAttractionId(cm.GetInt("Введите id нужного аттракциона:")));
+                    SelectAttractionMenu(GetExistAttraction(cm.GetInt("Введите id нужного аттракциона:")));
                     break;
                 case 4:
                     SelectSortingMenu();
@@ -118,18 +118,22 @@ public class ParkApp
 
     }
 
-    private void EchoAttractions()
+    private void EchoAttractions(int minVisitorAge = 999)
     {
         var attractions = park.GetAllAttractions();
         foreach (var attraction in attractions)
-            cm.Echo($"{attraction.Id} - {attraction}");
+        {
+            if(minVisitorAge >= attraction.AgeRestriction)
+                cm.Echo($"{attraction.Id} - {attraction}");
+        }
     }
 
-    private int GetExistAttractionId(int attId)
+    private AttractionModel GetExistAttraction(int attId, int minVisitorAge = 999)
     {
-        while (!park.ExistAttraction(attId))
-            attId = cm.GetInt("Введите id существующего аттракциона!");
-        return attId;
+        AttractionModel? attraction = park.GetAttractionById(attId);
+        while (attraction == null || attraction.AgeRestriction > minVisitorAge)
+            attraction = park.GetAttractionById(cm.GetInt("Введите id аттракциона из списка!"));
+        return attraction;
     }
     
     private void CreateAttractionMenu()//Меню создания аттракциона
@@ -214,10 +218,14 @@ public class ParkApp
         };
     }
 
-    private void SelectAttractionMenu(int attractionId)//Меню после выбора аттракциона
+    private void SelectAttractionMenu(AttractionModel? attraction)//Меню после выбора аттракциона
     {
-        var attraction = park.GetAttractionById(attractionId);
-        cm.Echo(attraction?.GetInfo());
+        if (attraction == null)
+        {
+            cm.Message("Аттракцион не найден!");
+            return;
+        }
+        cm.Echo(attraction.GetInfo());
         
         string[] menuItems = new[]
         {
@@ -233,7 +241,7 @@ public class ParkApp
             case 2:
                 var answer = cm.GetBool("Вы уверены?");
                 if(!answer) break;
-                if(park.RemoveAttraction(attractionId)) cm.Message($"Аттракцион \"{attraction.Name}\" удален!");
+                if(park.RemoveAttraction(attraction)) cm.Message($"Аттракцион \"{attraction.Name}\" удален!");
                 else cm.Message("Произошла ошибка при удалении!");
                 return;
         }
@@ -262,7 +270,7 @@ public class ParkApp
                     cm.Message("Посетитель успешно создан!");
                     break;
                 case 3:
-                    SelectVisitorMenu(GetExistVisitorId(cm.GetInt("Введите id нужного посетителя:")));
+                    SelectVisitorMenu(GetExistVisitor(cm.GetInt("Введите id нужного посетителя:")));
                     break;
             }
         }
@@ -275,15 +283,20 @@ public class ParkApp
             cm.Echo($"{i+1} - {visitors[i]}");
     }
 
-    private int GetExistVisitorId(int visitorId)
+    private Visitor GetExistVisitor(int visitorId)
     {
         while (!park.ExistVisitor(visitorId - 1))
             visitorId = cm.GetInt("Введите id существующего посетителя!");
-        return visitorId - 1;
+        return park.GetVisitorById(visitorId - 1)!;
     }
     
-    private void SelectVisitorMenu(int visitorId)
+    private void SelectVisitorMenu(Visitor? visitor)
     {
+        if (visitor == null)
+        {
+            cm.Message("Посетитель не найден!");
+            return;
+        }
         string[] menuItems = new[]
         {
             "Назад","Удалить посетителя", "Изменить имя", "Изменить возраст", "Просмотр билетов", "Купить билет"
@@ -291,8 +304,7 @@ public class ParkApp
         
         while (true)
         {
-            var visitor = park.GetVisitorById(visitorId);
-            cm.Echo(visitor?.ToString());
+            cm.Echo(visitor.ToString());
 
             var menuId = cm.MenuDisplay(menuItems);
             switch (menuId)
@@ -302,7 +314,7 @@ public class ParkApp
                 case 2:
                     var answer = cm.GetBool("Вы уверены?");
                     if(!answer) break;
-                    if(park.RemoveVisitor(visitorId)) cm.Message("Посетитель был удален!");
+                    if(park.RemoveVisitor(visitor)) cm.Message("Посетитель был удален!");
                     else cm.Message("Произошла ошибка при удалении!");
                     return;
                 case 3:
@@ -323,8 +335,8 @@ public class ParkApp
                     }
                     break;
                 case 6:
-                    EchoAttractions();
-                    if (park.BuyTicket(visitor, GetExistAttractionId(cm.GetInt("Введите id нужного аттракциона:"))))
+                    EchoAttractions(visitor.Age);
+                    if (park.BuyTicket(visitor, GetExistAttraction(cm.GetInt("Введите id нужного аттракциона:"), visitor.Age)))
                         cm.Message("Билет успешно куплен!");
                     else cm.Message("Ошибка при покупке билета!");
                     break;
@@ -335,8 +347,8 @@ public class ParkApp
     
     private void ViewCalculations()
     {
-        var _visitors = new List<Visitor>();
-        var _attractions = new List<AttractionModel>();
+        var visitors = new List<Visitor>();
+        var attractions = new List<AttractionModel>();
 
         if (park.GetAllVisitors().Length == 0 || park.GetAllAttractions().Length == 0)
         {
@@ -347,45 +359,51 @@ public class ParkApp
         //Получение посетителей и аттракционов
         cm.Echo("Выберите посетителей:");
         EchoVisitors();
+        var minAge = 999;
         while (true)
         {
             var num = cm.GetInt("Введите id посетителя (для завершения введите 0):");
             if(num == 0) break;
-            var visitor = park.GetVisitorById(GetExistVisitorId(num));
-            if (_visitors.Contains(visitor)) cm.Echo("Данный посетитель уже выбран!");
-            else _visitors.Add(visitor);
+            var visitor = GetExistVisitor(num);
+            if (visitors.Contains(visitor)) cm.Echo("Данный посетитель уже выбран!");
+            else
+            {
+                visitors.Add(visitor);
+                if (minAge > visitor.Age) minAge = visitor.Age;
+            }
         }
         
+        
         cm.Echo("\nВыберите аттракционы:");
-        EchoAttractions();
+        EchoAttractions(minAge);
         while (true)
         {
             var num = cm.GetInt("Введите id аттракциона (для завершения введите 0):");
             if(num == 0) break;
-            var attraction = park.GetAttractionById(GetExistAttractionId(num));
-            if (_attractions.Contains(attraction)) cm.Echo("Данный аттракцион уже выбран!");
-            else _attractions.Add(attraction);
+            var attraction = GetExistAttraction(num, minAge);
+            if (attractions.Contains(attraction)) cm.Echo("Данный аттракцион уже выбран!");
+            else attractions.Add(attraction);
         }
         cm.Echo("\nВы выбрали:");
         cm.Echo("\nПосетители:");
-        foreach (var visitor in _visitors)
+        foreach (var visitor in visitors)
             cm.Echo(visitor.ToString());
         cm.Echo("\nАттракционы:");
-        foreach (var attraction in _attractions)
+        foreach (var attraction in attractions)
             cm.Echo(attraction.ToString());
         
         //Вычисления
         int countChildVisitors = 0;
-        foreach (var visitor in _visitors)
+        foreach (var visitor in visitors)
             if (visitor.Age < 14) countChildVisitors++;
-        int countAdultVisitors = _visitors.Count - countChildVisitors;
+        int countAdultVisitors = visitors.Count - countChildVisitors;
         
         
         double totalDurationInMin = 0;
         double totalSumPrice = 0;
-        foreach (var attraction in _attractions)
+        foreach (var attraction in attractions)
         {
-            int numberVisitsForGroup = (int)Math.Ceiling((double)_visitors.Count / attraction.MaxVisitors);
+            int numberVisitsForGroup = (int)Math.Ceiling((double)visitors.Count / attraction.MaxVisitors);
             double durationInMin = numberVisitsForGroup * attraction.DurationAttractionInMin;
             totalDurationInMin += durationInMin;
             totalSumPrice += countAdultVisitors * attraction.Price + countChildVisitors * (attraction.Price / 2);
@@ -393,20 +411,24 @@ public class ParkApp
         
         cm.Echo($"\nДлительность посещения аттракционов для группы: {totalDurationInMin} мин.\n" +
                 $"Общая сумма билетов для группы: {totalSumPrice} руб.\n" +
-                $"Количество посетителей: {_visitors.Count}\n" +
+                $"Количество посетителей: {visitors.Count}\n" +
                 $"Количество посетителей с детским билетом: {countChildVisitors}\n" +
-                $"Количество аттракционов: {_attractions.Count}\n");
+                $"Количество аттракционов: {attractions.Count}\n");
         
         
         //Покупка билетов
         var buyTickets = cm.GetBool("Купить билеты посетителям на данные аттракционы?");
         if(!buyTickets) return;
-        foreach (var attraction in _attractions)
+        foreach (var attraction in attractions)
         {
-            foreach (var visitor in _visitors)
-                park.BuyTicket(visitor, attraction.Id);
+            foreach (var visitor in visitors)
+            {
+                cm.Echo(park.BuyTicket(visitor, attraction)
+                    ? $"Билет на аттракцион {attraction.Name} для {visitor.Name} куплен!"
+                    : $"При покупке билета на аттракцион {attraction.Name} для {visitor.Name} произошла ошибка!");
+            }
         }
-        cm.Message("Билеты были успешно приобретены!");
+        
     }
 
 
@@ -424,19 +446,19 @@ public class ParkApp
             case 1:
                 return;
             case 2:
-                park.SortAttractions(compareId);
+                park.SortAttractions(_compareId);
                 break;
             case 3:
-                park.SortAttractions(compareName);
+                park.SortAttractions(_compareName);
                 break;
             case 4:
-                park.SortAttractions(comparePrice);
+                park.SortAttractions(_comparePrice);
                 break;
             case 5:
-                park.SortAttractions(compareMaxVisitors);
+                park.SortAttractions(_compareMaxVisitors);
                 break;
             case 6:
-                park.SortAttractions(compareAgeRestriction);
+                park.SortAttractions(_compareAgeRestriction);
                 break;
         }
         cm.Message("Аттракционы успешно отсортированы!");

@@ -1,7 +1,8 @@
-﻿using System;
-using AmusementPark;
+﻿using AmusementPark;
 using AmusementPark.models;
 using AmusementPark.models.attractions;
+
+namespace AmusementPark;
 
 class Program
 {
@@ -27,11 +28,23 @@ class Program
             new ShootingRange("Ковбой", 280, 10, 8, 10, 6, "револьвер")
         };
         park.AddAttraction(attractions);
-        
-        park.AddVisitor(new Visitor("Иван", 10));
-        park.AddVisitor(new Visitor("Маша", 14));
-        park.AddVisitor(new Visitor("Дима", 20));
 
+        var visitors = new Visitor[]
+        {
+            new Visitor("Иван", 10),
+            new Visitor("Мария", 14),
+            new Visitor("Дмитрий", 20),
+            new Visitor("Александр", 12),
+            new Visitor("Алексей", 16),
+            new Visitor("Анастасия", 6),
+            new Visitor("Владимир", 18),
+            new Visitor("Дарья", 31),
+            new Visitor("Николай", 35),
+            new Visitor("Никита", 8),
+            new Visitor("Наталья", 21),
+        };
+        park.AddVisitor(visitors);
+        
         ParkApp app = new ParkApp(park);
         app.Run();
     }
