@@ -1,0 +1,151 @@
+{
+  "$type": "System.Collections.Generic.List`1[[AmusementPark.models.AttractionModel, AmusementPark]], System.Private.CoreLib",
+  "$values": [
+    {
+      "$type": "AmusementPark.models.attractions.Carousel, AmusementPark",
+      "GroundCarousel": true,
+      "SeatType": "Лошадка",
+      "Id": 1,
+      "Name": "Карусель веселья",
+      "Type": 0,
+      "Price": 150.0,
+      "AgeRestriction": 4,
+      "MaxVisitors": 10,
+      "DurationAttractionInMin": 5.0
+    },
+    {
+      "$type": "AmusementPark.models.attractions.Carousel, AmusementPark",
+      "GroundCarousel": false,
+      "SeatType": "Кресло",
+      "Id": 2,
+      "Name": "Круговорот",
+      "Type": 1,
+      "Price": 280.0,
+      "AgeRestriction": 14,
+      "MaxVisitors": 20,
+      "DurationAttractionInMin": 4.0
+    },
+    {
+      "$type": "AmusementPark.models.attractions.Carousel, AmusementPark",
+      "GroundCarousel": false,
+      "SeatType": "Кабинка",
+      "Id": 3,
+      "Name": "Полет птицы",
+      "Type": 3,
+      "Price": 250.0,
+      "AgeRestriction": 10,
+      "MaxVisitors": 25,
+      "DurationAttractionInMin": 8.0
+    },
+    {
+      "$type": "AmusementPark.models.attractions.FerrisWheel, AmusementPark",
+      "HeightInMeters": 120.0,
+      "CabinCapacity": 6,
+      "Id": 4,
+      "Name": "Вершина мира",
+      "Type": 3,
+      "Price": 300.0,
+      "AgeRestriction": 10,
+      "MaxVisitors": 120,
+      "DurationAttractionInMin": 15.0
+    },
+    {
+      "$type": "AmusementPark.models.attractions.FerrisWheel, AmusementPark",
+      "HeightInMeters": 80.0,
+      "CabinCapacity": 5,
+      "Id": 5,
+      "Name": "Колесо любви",
+      "Type": 3,
+      "Price": 240.0,
+      "AgeRestriction": 10,
+      "MaxVisitors": 60,
+      "DurationAttractionInMin": 10.0
+    },
+    {
+      "$type": "AmusementPark.models.attractions.GoKart, AmusementPark",
+      "TrackLengthInMeters": 800.0,
+      "MaxSpeed": 40.0,
+      "NumberOfLaps": 5,
+      "Id": 6,
+      "Name": "Космические гонки",
+      "Type": 2,
+      "Price": 500.0,
+      "AgeRestriction": 14,
+      "MaxVisitors": 20,
+      "DurationAttractionInMin": 10.0
+    },
+    {
+      "$type": "AmusementPark.models.attractions.HorrorMaze, AmusementPark",
+      "Theme": "Призраки",
+      "ScareLevel": 6,
+      "Id": 7,
+      "Name": "Зов тьмы",
+      "Type": 3,
+      "Price": 420.0,
+      "AgeRestriction": 14,
+      "MaxVisitors": 15,
+      "DurationAttractionInMin": 20.0
+    },
+    {
+      "$type": "AmusementPark.models.attractions.HorrorMaze, AmusementPark",
+      "Theme": "Демоны",
+      "ScareLevel": 8,
+      "Id": 8,
+      "Name": "Адский путь",
+      "Type": 3,
+      "Price": 440.0,
+      "AgeRestriction": 18,
+      "MaxVisitors": 15,
+      "DurationAttractionInMin": 25.0
+    },
+    {
+      "$type": "AmusementPark.models.attractions.MiniGolf, AmusementPark",
+      "NumberOfHoles": 10,
+      "SurfaceType": "газон",
+      "Id": 9,
+      "Name": "Мини-гольф",
+      "Type": 2,
+      "Price": 390.0,
+      "AgeRestriction": 8,
+      "MaxVisitors": 12,
+      "DurationAttractionInMin": 30.0
+    },
+    {
+      "$type": "AmusementPark.models.attractions.RollerCoaster, AmusementPark",
+      "TrackLengthInMeters": 800.0,
+      "MaxSpeedInKmH": 60.0,
+      "WagonCapacity": 2,
+      "Id": 10,
+      "Name": "Дорога страха",
+      "Type": 1,
+      "Price": 380.0,
+      "AgeRestriction": 16,
+      "MaxVisitors": 25,
+      "DurationAttractionInMin": 6.0
+    },
+    {
+      "$type": "AmusementPark.models.attractions.ShootingRange, AmusementPark",
+      "TargetCount": 8,
+      "GunType": "ружье",
+      "Id": 11,
+      "Name": "Стрелок",
+      "Type": 2,
+      "Price": 280.0,
+      "AgeRestriction": 10,
+      "MaxVisitors": 10,
+      "DurationAttractionInMin": 10.0
+    },
+    {
+      "$type": "AmusementPark.models.attractions.ShootingRange, AmusementPark",
+      "TargetCount": 6,
+      "GunType": "револьвер",
+      "Id": 12,
+      "Name": "Ковбой",
+      "Type": 2,
+      "Price": 280.0,
+      "AgeRestriction": 10,
+      "MaxVisitors": 8,
+      "DurationAttractionInMin": 10.0
+    }
+  ]
+}

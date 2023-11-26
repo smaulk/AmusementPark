@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="AmusementPark.models.AttractionModel">
+    <Position X="4.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAACAAAAAQAAAAAEAAIAAAQAAAAAAEACASAAAAAAAAA=</HashCode>
+      <FileName>Models\ParkModels\AttractionModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AmusementPark.models.attractions.Carousel">
+    <Position X="7.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAACAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\ParkModels\Attractions\Carousel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AmusementPark.models.attractions.FerrisWheel">
+    <Position X="5.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEACAAAAAAAgAAA=</HashCode>
+      <FileName>Models\ParkModels\Attractions\FerrisWheel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AmusementPark.models.attractions.GoKart">
+    <Position X="5.75" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAEAAAAAAAAAEAAAAQAAAAAAAA=</HashCode>
+      <FileName>Models\ParkModels\Attractions\GoKart.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AmusementPark.models.attractions.HorrorMaze">
+    <Position X="3.75" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAQAAAAAAAAAAAAAEAAAAAAAAAkAAA=</HashCode>
+      <FileName>Models\ParkModels\Attractions\HorrorMaze.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AmusementPark.models.attractions.MiniGolf">
+    <Position X="1.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAAAAAAAAAAgAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\ParkModels\Attractions\MiniGolf.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AmusementPark.models.attractions.RollerCoaster">
+    <Position X="3" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAEAAAAAAAAAAAAEAIAAAAAAAAAAA=</HashCode>
+      <FileName>Models\ParkModels\Attractions\RollerCoaster.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AmusementPark.models.attractions.ShootingRange">
+    <Position X="1" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAACAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\ParkModels\Attractions\ShootingRange.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AmusementPark.models.Park">
+    <Position X="9.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAIAAAAAABAMAJBMgAAAAAAsAQAAAAAgAAEAABAAABA=</HashCode>
+      <FileName>Models\ParkModels\Park.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AmusementPark.models.Ticket">
+    <Position X="11" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAgAAAEAAAAAAQAAAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>Models\ParkModels\Ticket.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AmusementPark.models.Visitor">
+    <Position X="11" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAABAAAAAAAAAEAEAAAAQAQAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Models\ParkModels\Visitor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AmusementPark.models.AttractionCollection&lt;T&gt;">
+    <Position X="13" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAABAAAAAQBAQAAAAIAAAEQABAAABQAAA=</HashCode>
+      <FileName>Models\ParkModels\AttractionCollection.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="AmusementPark.ParkApp">
+    <Position X="15" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAACCIBigQCSAAEAAAAUAAEABAFAEAAAAgAQAI=</HashCode>
+      <FileName>App\ParkApp.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AmusementPark.ConsoleManager">
+    <Position X="8.5" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACBAAAgAAAAAAggAAAABAAAAAAAAAAAAAAAIACAAAA=</HashCode>
+      <FileName>App\ConsoleManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AmusementPark.Logging.FileWrite">
+    <Position X="10.25" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>App\Logging\FileWrite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AmusementPark.Logging.Logger">
+    <Position X="12" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>App\Logging\Logger.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="AmusementPark.Config">
+    <Position X="13.75" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Software\Config.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AmusementPark.PathNotFoundError">
+    <Position X="15.5" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Software\PathNotFoundError.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

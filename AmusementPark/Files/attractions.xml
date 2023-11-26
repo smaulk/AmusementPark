@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfAttractionModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <AttractionModel xsi:type="Carousel">
+    <Name>Карусель веселья</Name>
+    <Type>ForChildren</Type>
+    <Price>150</Price>
+    <AgeRestriction>4</AgeRestriction>
+    <MaxVisitors>10</MaxVisitors>
+    <DurationAttractionInMin>5</DurationAttractionInMin>
+    <GroundCarousel>true</GroundCarousel>
+    <SeatType>Лошадка</SeatType>
+  </AttractionModel>
+  <AttractionModel xsi:type="Carousel">
+    <Name>Круговорот</Name>
+    <Type>Extreme</Type>
+    <Price>280</Price>
+    <AgeRestriction>14</AgeRestriction>
+    <MaxVisitors>20</MaxVisitors>
+    <DurationAttractionInMin>4</DurationAttractionInMin>
+    <GroundCarousel>false</GroundCarousel>
+    <SeatType>Кресло</SeatType>
+  </AttractionModel>
+  <AttractionModel xsi:type="Carousel">
+    <Name>Полет птицы</Name>
+    <Type>Entertainment</Type>
+    <Price>250</Price>
+    <AgeRestriction>10</AgeRestriction>
+    <MaxVisitors>25</MaxVisitors>
+    <DurationAttractionInMin>8</DurationAttractionInMin>
+    <GroundCarousel>false</GroundCarousel>
+    <SeatType>Кабинка</SeatType>
+  </AttractionModel>
+  <AttractionModel xsi:type="FerrisWheel">
+    <Name>Вершина мира</Name>
+    <Type>Entertainment</Type>
+    <Price>300</Price>
+    <AgeRestriction>10</AgeRestriction>
+    <MaxVisitors>120</MaxVisitors>
+    <DurationAttractionInMin>15</DurationAttractionInMin>
+    <HeightInMeters>120</HeightInMeters>
+    <CabinCapacity>6</CabinCapacity>
+  </AttractionModel>
+  <AttractionModel xsi:type="FerrisWheel">
+    <Name>Колесо любви</Name>
+    <Type>Entertainment</Type>
+    <Price>240</Price>
+    <AgeRestriction>10</AgeRestriction>
+    <MaxVisitors>60</MaxVisitors>
+    <DurationAttractionInMin>10</DurationAttractionInMin>
+    <HeightInMeters>80</HeightInMeters>
+    <CabinCapacity>5</CabinCapacity>
+  </AttractionModel>
+  <AttractionModel xsi:type="GoKart">
+    <Name>Космические гонки</Name>
+    <Type>Sports</Type>
+    <Price>500</Price>
+    <AgeRestriction>14</AgeRestriction>
+    <MaxVisitors>20</MaxVisitors>
+    <DurationAttractionInMin>10</DurationAttractionInMin>
+    <TrackLengthInMeters>800</TrackLengthInMeters>
+    <MaxSpeed>40</MaxSpeed>
+    <NumberOfLaps>5</NumberOfLaps>
+  </AttractionModel>
+  <AttractionModel xsi:type="HorrorMaze">
+    <Name>Зов тьмы</Name>
+    <Type>Entertainment</Type>
+    <Price>420</Price>
+    <AgeRestriction>14</AgeRestriction>
+    <MaxVisitors>15</MaxVisitors>
+    <DurationAttractionInMin>20</DurationAttractionInMin>
+    <Theme>Призраки</Theme>
+    <ScareLevel>6</ScareLevel>
+  </AttractionModel>
+  <AttractionModel xsi:type="HorrorMaze">
+    <Name>Адский путь</Name>
+    <Type>Entertainment</Type>
+    <Price>440</Price>
+    <AgeRestriction>18</AgeRestriction>
+    <MaxVisitors>15</MaxVisitors>
+    <DurationAttractionInMin>25</DurationAttractionInMin>
+    <Theme>Демоны</Theme>
+    <ScareLevel>8</ScareLevel>
+  </AttractionModel>
+  <AttractionModel xsi:type="MiniGolf">
+    <Name>Мини-гольф</Name>
+    <Type>Sports</Type>
+    <Price>390</Price>
+    <AgeRestriction>8</AgeRestriction>
+    <MaxVisitors>12</MaxVisitors>
+    <DurationAttractionInMin>30</DurationAttractionInMin>
+    <NumberOfHoles>10</NumberOfHoles>
+    <SurfaceType>газон</SurfaceType>
+  </AttractionModel>
+  <AttractionModel xsi:type="RollerCoaster">
+    <Name>Дорога страха</Name>
+    <Type>Extreme</Type>
+    <Price>380</Price>
+    <AgeRestriction>16</AgeRestriction>
+    <MaxVisitors>25</MaxVisitors>
+    <DurationAttractionInMin>6</DurationAttractionInMin>
+    <TrackLengthInMeters>800</TrackLengthInMeters>
+    <MaxSpeedInKmH>60</MaxSpeedInKmH>
+    <WagonCapacity>2</WagonCapacity>
+  </AttractionModel>
+  <AttractionModel xsi:type="ShootingRange">
+    <Name>Стрелок</Name>
+    <Type>Sports</Type>
+    <Price>280</Price>
+    <AgeRestriction>10</AgeRestriction>
+    <MaxVisitors>10</MaxVisitors>
+    <DurationAttractionInMin>10</DurationAttractionInMin>
+    <TargetCount>8</TargetCount>
+    <GunType>ружье</GunType>
+  </AttractionModel>
+  <AttractionModel xsi:type="ShootingRange">
+    <Name>Ковбой</Name>
+    <Type>Sports</Type>
+    <Price>280</Price>
+    <AgeRestriction>10</AgeRestriction>
+    <MaxVisitors>8</MaxVisitors>
+    <DurationAttractionInMin>10</DurationAttractionInMin>
+    <TargetCount>6</TargetCount>
+    <GunType>револьвер</GunType>
+  </AttractionModel>
+</ArrayOfAttractionModel>
