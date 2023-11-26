@@ -10,7 +10,6 @@ public class FileWrite
         _filePath =  filePath;
         if (!File.Exists(filePath))
             File.Create(filePath).Close();
-        
     }
 
     public void WriteToFile(string message)
