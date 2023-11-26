@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Globalization;
+using AmusementPark.Logging;
 using AmusementPark.models;
+using AmusementPark.Interfaces;
 using AmusementPark.models.attractions;
 
 namespace AmusementPark;
@@ -9,11 +11,24 @@ public class ParkApp
 {
     private Park park;
     private ConsoleManager cm;
+    private ILogger logger;
 
-    public ParkApp(Park park)
+    private JsonDataWorker _jsonDataWorker;
+    private XmlDataWorker _xmlDataWorker;
+
+    public ParkApp(Park park, Config config)
     {
         this.park = park;
         this.cm = new ConsoleManager();
+        
+        Logger newLogger = new Logger();
+        FileWrite fileWrite = new FileWrite(config.LogPath);
+        newLogger.LogEvent += Console.WriteLine;
+        newLogger.LogEvent += fileWrite.WriteToFile;
+        this.logger = newLogger;
+
+        this._jsonDataWorker = new JsonDataWorker(config.JsonPath);
+        this._xmlDataWorker = new XmlDataWorker(config.XmlPath);
     }
     
     private readonly Func<AttractionModel, AttractionModel, int> _compareId = (x, y) => x.Id.CompareTo(y.Id);
@@ -24,9 +39,11 @@ public class ParkApp
     
     public void Run()//Запуск и главное меню
     {
+        logger.Log("Запуск программы");
         string[] menuItems = new[]
         {
-            "Информация о парке", "Просмотр аттракционов", "Просмотр посетителей", "Расчеты", "Закрыть программу"
+            "Информация о парке", "Просмотр аттракционов", "Просмотр посетителей", "Расчеты",
+            "Сериализация", "Закрыть программу"
         };
 
         while (true)
@@ -47,7 +64,10 @@ public class ParkApp
                     ViewCalculations();
                     break;
                 case 5:
-                    cm.Message("Закрытие программы");
+                    SelectSerializationMenu();
+                    break;
+                case 6:
+                    logger.Log("Закрытие программы");
                     return;
             }
         }
@@ -73,12 +93,12 @@ public class ParkApp
                 case 2: //Изменение названия парка
                     var newName = cm.GetString("Введите новое название парка:");
                     park.ParkName = newName;
-                    cm.Echo("Название успешно изменено!\n");
+                    logger.Log($"Название парка успешно изменено на {newName}");
                     break;
                 case 3: //Изменение адреса парка
                     var newAdress = cm.GetString("Введите новый адрес парка:");
                     park.ParkAddress = newAdress;
-                    cm.Echo("Адрес успешно изменен!\n");
+                    logger.Log($"Адрес парка успешно изменен на {newAdress}");
                     break;
                 case 4: //Изменение времени работы парка
                     var newWorkingHours = cm.GetString("Введите новое время работы (hh:mm - hh:mm)");
@@ -93,7 +113,7 @@ public class ParkApp
 
         string[] menuItems = new[]
         {
-            "В главное меню", "Добавить аттракцион", "Выбрать аттракцион", "Сортировать"
+            "В главное меню", "Добавить аттракцион", "Выбрать аттракцион", "Сортировать", "Фильтр по типу"
         };
 
         while (true)
@@ -113,11 +133,23 @@ public class ParkApp
                 case 4:
                     SelectSortingMenu();
                     break;
+                case 5:
+                    SelectFilterByTypeMenu();
+                    return;
             }
         }
 
     }
-
+    
+    private void EchoAttractionsByType(AttractionType type)
+    {
+        var attractions = park.GetAllAttractions();
+        foreach (var attraction in attractions)
+        {
+            if(attraction.Type == type)
+                cm.Echo($"{attraction.Id} - {attraction}");
+        }
+    } 
     private void EchoAttractions(int minVisitorAge = 999)
     {
         var attractions = park.GetAllAttractions();
@@ -146,7 +178,7 @@ public class ParkApp
         var menuId = cm.MenuDisplay(menuItems, "Выберите нужный аттракцион для создания:");
 
         var data = GetAttractionModelData();
-
+        
         switch (menuId)
         {
             case 1:
@@ -202,8 +234,8 @@ public class ParkApp
                     cm.GetString("Введите вид оружия:")));
                 break;
         }
-        cm.Message("Аттракцион успешно создан!");
-        
+        logger.Log("Новый аттракцион успешно создан");
+
     }
 
     private object[] GetAttractionModelData()//Получение массива с данными для создания аттракционов
@@ -241,12 +273,44 @@ public class ParkApp
             case 2:
                 var answer = cm.GetBool("Вы уверены?");
                 if(!answer) break;
-                if(park.RemoveAttraction(attraction)) cm.Message($"Аттракцион \"{attraction.Name}\" удален!");
-                else cm.Message("Произошла ошибка при удалении!");
+                if(park.RemoveAttraction(attraction)) logger.Log($"Аттракцион \"{attraction.Name}\" удален");
+                else logger.Log("Произошла ошибка при удалении аттракциона");
                 return;
         }
     }
 
+    private void SelectFilterByTypeMenu()
+    {
+        
+        var attractions = park.GetAllAttractions();
+        string[] menuItems = new[]
+        {
+            "Назад", "Для детей", "Экстремальный", "Спортивный", "Развлекательный", "Неизвестный"
+        };
+        
+        var menuId = cm.MenuDisplay(menuItems);
+        switch (menuId)
+        {
+            case 1:
+                return;
+            case 2:
+                EchoAttractionsByType(AttractionType.ForChildren);
+                return;
+            case 3:
+                EchoAttractionsByType(AttractionType.Extreme);
+                return;
+            case 4:
+                EchoAttractionsByType(AttractionType.Sports);
+                return;
+            case 5:
+                EchoAttractionsByType(AttractionType.Entertainment);
+                return;
+            case 6:
+                EchoAttractionsByType(AttractionType.Unidentified);
+                return;
+        }
+    }
+    
     private void ViewVisitors()
     {
 
@@ -267,7 +331,7 @@ public class ParkApp
                     var visitorName = cm.GetString("Введите имя посетителя:");
                     var visitorAge = cm.GetInt("Введите возраст посетителя:");
                     park.AddVisitor(new Visitor(visitorName, visitorAge));
-                    cm.Message("Посетитель успешно создан!");
+                    logger.Log($"Посетитель \"{visitorName}\" успешно создан");
                     break;
                 case 3:
                     SelectVisitorMenu(GetExistVisitor(cm.GetInt("Введите id нужного посетителя:")));
@@ -314,16 +378,16 @@ public class ParkApp
                 case 2:
                     var answer = cm.GetBool("Вы уверены?");
                     if(!answer) break;
-                    if(park.RemoveVisitor(visitor)) cm.Message("Посетитель был удален!");
-                    else cm.Message("Произошла ошибка при удалении!");
+                    if(park.RemoveVisitor(visitor)) logger.Log($"Посетитель \"{visitor.Name}\" был удален");
+                    else cm.Message("Произошла ошибка при удалении посетителя");
                     return;
                 case 3:
                     visitor.Name = cm.GetString("Введите новое имя посетителя:");
-                    cm.Message("Имя успешно изменено!");
+                    logger.Log($"Имя посетителя успешно изменено на {visitor.Name}");
                     break;
                 case 4:
                     visitor.Age = cm.GetInt("Введите новый возраст посетителя:");
-                    cm.Message("Возраст успешно изменен!");
+                    logger.Log($"Возраст успешно изменен на {visitor.Age}");
                     break;
                 case 5:
                     if (visitor.TicketCount == 0) cm.Message("У посетителя нет билетов!");
@@ -336,9 +400,10 @@ public class ParkApp
                     break;
                 case 6:
                     EchoAttractions(visitor.Age);
-                    if (park.BuyTicket(visitor, GetExistAttraction(cm.GetInt("Введите id нужного аттракциона:"), visitor.Age)))
-                        cm.Message("Билет успешно куплен!");
-                    else cm.Message("Ошибка при покупке билета!");
+                    var attraction = GetExistAttraction(cm.GetInt("Введите id нужного аттракциона:"), visitor.Age);
+                    if (park.BuyTicket(visitor, attraction))
+                        logger.Log($"Билет на аттракцион \"{attraction.Name}\" для \"{visitor.Name}\" успешно куплен");
+                    else logger.Log($"При покупке билета на аттракцион \"{attraction.Name}\" для \"{visitor.Name}\" произошла ошибка");
                     break;
             }
         }
@@ -352,7 +417,7 @@ public class ParkApp
 
         if (park.GetAllVisitors().Length == 0 || park.GetAllAttractions().Length == 0)
         {
-            cm.Message("Посетители или аттракционы отсутсвуют!");
+            cm.Message("Посетители или аттракционы отсутствуют!");
             return;
         }
         
@@ -423,16 +488,16 @@ public class ParkApp
         {
             foreach (var visitor in visitors)
             {
-                cm.Echo(park.BuyTicket(visitor, attraction)
-                    ? $"Билет на аттракцион {attraction.Name} для {visitor.Name} куплен!"
-                    : $"При покупке билета на аттракцион {attraction.Name} для {visitor.Name} произошла ошибка!");
+                logger.Log(park.BuyTicket(visitor, attraction)
+                    ? $"Билет на аттракцион \"{attraction.Name}\" для \"{visitor.Name}\" успешно куплен"
+                    : $"При покупке билета на аттракцион \"{attraction.Name}\" для \"{visitor.Name}\" произошла ошибка");
             }
         }
         
     }
 
 
-    private void SelectSortingMenu()
+    private async Task SelectSortingMenu()
     {
         string[] menuItems = new[]
         {
@@ -446,21 +511,72 @@ public class ParkApp
             case 1:
                 return;
             case 2:
-                park.SortAttractions(_compareId);
-                break;
+                await SortAndLogAsync(_compareId, "id");
+                return;
             case 3:
-                park.SortAttractions(_compareName);
-                break;
+                await SortAndLogAsync(_compareName, "имени");
+                return;
             case 4:
-                park.SortAttractions(_comparePrice);
-                break;
+                await SortAndLogAsync(_comparePrice, "цене");
+                return;
             case 5:
-                park.SortAttractions(_compareMaxVisitors);
-                break;
+                await SortAndLogAsync(_compareMaxVisitors, "вместимости");
+                return;
             case 6:
-                park.SortAttractions(_compareAgeRestriction);
-                break;
+                await SortAndLogAsync(_compareAgeRestriction, "ограничению возраста");
+                return;
         }
-        cm.Message("Аттракционы успешно отсортированы!");
+    }
+    
+    private async Task SortAndLogAsync(Func<AttractionModel, AttractionModel, int> comparison, string sortBy)
+    {
+        logger.Log("Начало сортировки.");
+
+        await Task.Run(() =>
+        {
+            park.SortAttractions(comparison);
+        });
+
+        logger.Log($"Аттракционы отсортированы по {sortBy}, " +
+                   $"Было отсортировано {park.CountAttractions} аттракционов");
+    }
+
+    private void SelectSerializationMenu()
+    {
+        string[] menuItems = new[]
+        {
+            "В главное меню", "Записать в JSON", "Считать из JSON", "Записать в XML", "Считать из XML"
+        };
+        
+        var menuId = cm.MenuDisplay(menuItems, "Работа с данными аттракционов:");
+        switch (menuId)
+        {
+            case 1: //В главное меню
+                return;
+            case 2:
+                WriteAttractionsAndLog(_jsonDataWorker, "JSON");
+                return;
+            case 3:
+                LoadAttractionsAndLog(_jsonDataWorker, "JSON");
+                return;
+            case 4:
+                WriteAttractionsAndLog(_xmlDataWorker, "XML");
+                return;
+            case 5:
+                LoadAttractionsAndLog(_xmlDataWorker, "XML");
+                return;
+        }
+    }
+
+    private void WriteAttractionsAndLog(IDataWorker<AttractionModel> dataWorker, string type)
+    {
+        park.WriteAttractions(dataWorker);
+        logger.Log($"Данные аттракционов записаны в формат {type}");
+    }
+    private void LoadAttractionsAndLog(IDataWorker<AttractionModel> dataWorker, string type)
+    {
+        if (park.LoadAttractions(dataWorker))
+            logger.Log($"Данные аттракционов прочитаны из формата {type}");
+        else logger.Log($"Произошла ошибка при чтении из формата {type}");
     }
 }

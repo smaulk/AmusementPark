@@ -1,5 +1,6 @@
 ﻿namespace AmusementPark.models.attractions;
 
+[Serializable]
 public class FerrisWheel: AttractionModel
 {
     public double HeightInMeters { get; set; }
@@ -12,6 +13,7 @@ public class FerrisWheel: AttractionModel
         this.HeightInMeters = heightInMeters;
         this.CabinCapacity = cabinCapacity;
     }
+    public FerrisWheel(){}
 
     public override string GetInfo()
     {

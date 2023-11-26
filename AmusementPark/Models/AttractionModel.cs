@@ -1,5 +1,17 @@
-﻿namespace AmusementPark.models;
+﻿using System.Xml.Serialization;
+using AmusementPark.models.attractions;
 
+namespace AmusementPark.models;
+
+//Атрибуты для сериализации в XML
+[XmlInclude(typeof(Carousel))]
+[XmlInclude(typeof(FerrisWheel))]
+[XmlInclude(typeof(GoKart))]
+[XmlInclude(typeof(HorrorMaze))]
+[XmlInclude(typeof(MiniGolf))]
+[XmlInclude(typeof(RollerCoaster))]
+[XmlInclude(typeof(ShootingRange))]
+[Serializable]
 public abstract class AttractionModel
 {
     public int Id { get;}
@@ -23,13 +35,18 @@ public abstract class AttractionModel
         this.MaxVisitors = maxVisitors;
         this.DurationAttractionInMin = durationAttractionInMin;
     }
-    
+
+    public AttractionModel()
+    {
+        this.Id = ++_lastId;
+    }
 
     public abstract string GetInfo();
 
     public override string ToString()
     {
-        return $"{GetType().Name}, Название: {Name}, Цена: {Price}, Вместимость: {MaxVisitors} чел., Возрастное ограничение: {AgeRestriction}+";
+        return $"{GetType().Name}, Название: {Name}, Цена: {Price}, Вместимость: {MaxVisitors} чел.," +
+               $" Возрастное ограничение: {AgeRestriction}+, Тип: {Type}";
     }
     
 }

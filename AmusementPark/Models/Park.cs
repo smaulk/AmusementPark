@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
+using AmusementPark.Logging;
 using AmusementPark.models.attractions;
+using AmusementPark.Interfaces;
 
 namespace AmusementPark.models;
 
@@ -112,7 +114,7 @@ public class Park
     
     public Visitor? GetVisitorById(int id)
     {
-        return ExistAttraction(id) ? VisitorsList[id] : null;
+        return ExistVisitor(id) ? VisitorsList[id] : null;
     }
 
     public bool ExistVisitor(int id)
@@ -144,5 +146,15 @@ public class Park
     public void SortAttractions(Func<AttractionModel, AttractionModel, int> comparison)
     {
         AttractionsList.Sort(comparison);
+    }
+
+    public bool LoadAttractions(IDataWorker<AttractionModel> dataWorker)
+    {
+        return AttractionsList.LoadData(dataWorker);
+    }
+
+    public void WriteAttractions(IDataWorker<AttractionModel> dataWorker)
+    {
+        AttractionsList.WriteData(dataWorker);
     }
 }

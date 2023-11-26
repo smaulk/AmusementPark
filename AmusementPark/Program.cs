@@ -1,4 +1,6 @@
-﻿using AmusementPark;
+﻿using System.Text.Json;
+using AmusementPark;
+using AmusementPark.Logging;
 using AmusementPark.models;
 using AmusementPark.models.attractions;
 
@@ -9,6 +11,42 @@ class Program
 
 
     public static void Main()
+    {
+        Park park = CreateDefaultPark();
+        Config cfg = ReadConfig();
+        
+        ParkApp app = new ParkApp(park, cfg);
+        app.Run();
+    }
+
+
+    private static Config ReadConfig(string cfgFileName = "config.json")
+    {
+        Config? newConfig;
+        var configFilePath = "../../../" + cfgFileName;
+        
+        if (!File.Exists(configFilePath))
+        {
+            throw new PathNotFoundError("Файл конфигурации не найден!", configFilePath);
+        }
+
+        var jsString = File.ReadAllText(configFilePath);
+
+        var curCfg = JsonSerializer.Deserialize<Config>(jsString);
+        string logPath = curCfg?.LogPath != null ? curCfg?.LogPath : "\\Files\\log.txt";
+        string jsonPath = curCfg?.JsonPath != null ? curCfg?.JsonPath : "\\Files\\data.json";
+        string xmlPath = curCfg?.XmlPath != null ? curCfg?.XmlPath : "\\Files\\data.xml";
+        newConfig = new Config(
+            "../../../" + logPath,
+            "../../../" + jsonPath,
+            "../../../" + xmlPath
+            );
+
+        return newConfig;
+
+    }
+
+    private static Park CreateDefaultPark()
     {
         Park park = new Park("Парк дружбы", "г. Челябинск, ул. Ленина 120", "08:00 - 20:00");
 
@@ -45,7 +83,6 @@ class Program
         };
         park.AddVisitor(visitors);
         
-        ParkApp app = new ParkApp(park);
-        app.Run();
+        return park;
     }
 }

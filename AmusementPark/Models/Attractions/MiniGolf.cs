@@ -1,5 +1,6 @@
 ﻿namespace AmusementPark.models.attractions;
 
+[Serializable]
 public class MiniGolf : AttractionModel
 {
     public int NumberOfHoles { get; set; }
@@ -12,6 +13,7 @@ public class MiniGolf : AttractionModel
         this.NumberOfHoles = numberOfHoles;
         this.SurfaceType = surfaceType;
     }
+    public MiniGolf(){}
     
     public override string GetInfo()
     {

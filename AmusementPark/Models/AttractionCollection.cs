@@ -2,13 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using AmusementPark.Logging;
+using AmusementPark.Interfaces;
 
 namespace AmusementPark.models;
 
 //Ограничение, что T должен быть наследником или самим классом AttractionModel
 public class AttractionCollection<T> : IEnumerable<T> where T : AttractionModel
 {
-    private List<T> _list;   
+    private List<T> _list;
     
     public AttractionCollection()
     {
@@ -51,6 +53,19 @@ public class AttractionCollection<T> : IEnumerable<T> where T : AttractionModel
     public int Compare(T item1, T item2, Func<T, T, int> comparison)
     {
         return comparison(item1, item2);
+    }
+
+    public void WriteData(IDataWorker<T> dataWorker)
+    {
+        dataWorker.WriteData(_list);
+    }
+
+    public bool LoadData(IDataWorker<T> dataWorker)
+    {
+        List<T>? newList = dataWorker.LoadData();
+        if (newList == null) return false;
+        _list.AddRange(newList);
+       return true;
     }
     
     public IEnumerator<T> GetEnumerator()

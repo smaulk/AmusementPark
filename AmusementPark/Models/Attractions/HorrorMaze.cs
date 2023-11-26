@@ -1,5 +1,6 @@
 ﻿namespace AmusementPark.models.attractions;
 
+[Serializable]
 public class HorrorMaze : AttractionModel
 {
     public string Theme { get; set; }
@@ -25,6 +26,7 @@ public class HorrorMaze : AttractionModel
         this.Theme = theme;
         this.ScareLevel = scareLevel;
     }
+    public HorrorMaze(){}
     
     public override string GetInfo()
     {

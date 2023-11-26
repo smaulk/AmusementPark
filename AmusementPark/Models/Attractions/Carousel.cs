@@ -1,5 +1,6 @@
 ﻿namespace AmusementPark.models.attractions;
 
+[Serializable]
 public class Carousel : AttractionModel
 {
     public bool GroundCarousel { get; set; }
@@ -11,6 +12,7 @@ public class Carousel : AttractionModel
         this.GroundCarousel = groundCarousel;
         this.SeatType = seatType;
     }
+    public Carousel(){}
 
     public override string GetInfo()
     {

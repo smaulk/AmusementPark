@@ -1,5 +1,6 @@
 ﻿namespace AmusementPark.models.attractions;
 
+[Serializable]
 public class RollerCoaster: AttractionModel
 {
     public double TrackLengthInMeters { get; set; }
@@ -14,6 +15,7 @@ public class RollerCoaster: AttractionModel
         this.MaxSpeedInKmH = maxSpeedInKmH;
         this.WagonCapacity = wagonCapacity;
     }
+    public RollerCoaster(){}
     
     public override string GetInfo()
     {

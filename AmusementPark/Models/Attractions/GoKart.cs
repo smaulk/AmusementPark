@@ -1,5 +1,6 @@
 ﻿namespace AmusementPark.models.attractions;
 
+[Serializable]
 public class GoKart : AttractionModel
 {
     public double TrackLengthInMeters { get; set; }
@@ -15,6 +16,7 @@ public class GoKart : AttractionModel
         this.TrackLengthInMeters = trackLengthInMeters;
         this.MaxSpeed = maxSpeed;
     }
+    public GoKart(){}
     
     public override string GetInfo()
     {

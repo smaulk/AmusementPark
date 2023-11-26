@@ -1,5 +1,6 @@
 ﻿namespace AmusementPark.models.attractions;
 
+[Serializable]
 public class ShootingRange : AttractionModel
 {
     public int TargetCount { get; set; }
@@ -12,6 +13,7 @@ public class ShootingRange : AttractionModel
         this.TargetCount = targetCount;
         this.GunType = gunType;
     }
+    public ShootingRange(){}
     
     public override string GetInfo()
     {

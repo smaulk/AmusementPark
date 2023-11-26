@@ -1,0 +1,5 @@
+{
+  "LogPath": "\\Files\\log.txt",
+  "JsonPath": "\\Files\\attractions.json",
+  "XmlPath": "\\Files\\attractions.xml"
+}
